@@ -22,6 +22,7 @@
 				<span><?php echo get_phrase('dashboard'); ?></span>
 			</a>
 		</li>
+		
 		<!-- Murugan Added here -->
 		<?php if (has_permission('country')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'country' || $page_name == 'country_add' || $page_name == 'country_edit') echo 'active'; ?>">
