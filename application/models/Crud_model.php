@@ -140,28 +140,6 @@ class Crud_model extends CI_Model
     }
 
 
-    public function get_status_wise_courses($status = "")
-    {
-        if (addon_status('scorm_course')) {
-            if ($status != "") {
-                $courses = $this->db->get_where('course', array('status' => $status));
-            } else {
-                $courses['draft'] = $this->db->get_where('course', array('status' => 'draft'));
-                $courses['pending'] = $this->db->get_where('course', array('status' => 'pending'));
-                $courses['active'] = $this->db->get_where('course', array('status' => 'active'));
-            }
-        } else {
-            if ($status != "") {
-                $courses = $this->db->get_where('course', array('status' => $status, 'course_type' => 'general'));
-            } else {
-                $courses['draft'] = $this->db->get_where('course', array('status' => 'draft', 'course_type' => 'general'));
-                $courses['pending'] = $this->db->get_where('course', array('status' => 'pending', 'course_type' => 'general'));
-                $courses['active'] = $this->db->get_where('course', array('status' => 'active', 'course_type' => 'general'));
-            }
-        }
-        return $courses;
-    }
-
  public function check_recaptcha()
     {
         if (isset($_POST["g-recaptcha-response"])) {

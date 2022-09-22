@@ -1,6 +1,4 @@
-<?php
-$status_wise_courses = $this->crud_model->get_status_wise_courses();
-?>
+
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left-side-menu left-side-menu-detached">
 	<div class="leftbar-user">
