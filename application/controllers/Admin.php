@@ -14,6 +14,7 @@ class Admin extends CI_Controller
         $this->output->set_header('Pragma: no-cache');
 
         $this->user_model->check_session_data('admin');
+        $this->load->helper('url');
     }
 
 
@@ -333,21 +334,8 @@ class Admin extends CI_Controller
                 $this->session->set_flashdata('error_message', get_phrase('country_name_already_exists'));
             }
             redirect(site_url('admin/country'), 'refresh');
-        } elseif ($param1 == "edit") {
-
-            $response = $this->custom_model->edit_country($param2);
-            if ($response) {
-                $this->session->set_flashdata('flash_message', get_phrase('data_added_successfully'));
-            } else {
-                $this->session->set_flashdata('error_message', get_phrase('country_name_already_exists'));
-            }
-            redirect(site_url('admin/country'), 'refresh');
-        } elseif ($param1 == "delete") {
-
-            $this->custom_model->delete_country($param2);
-            $this->session->set_flashdata('flash_message', get_phrase('data_deleted'));
-            redirect(site_url('admin/country'), 'refresh');
-        }
+        } 
+        
         $page_data['page_name'] = 'country';
         $page_data['page_title'] = get_phrase('country');
         $page_data['country'] = $this->custom_model->get_country($param2);
@@ -417,6 +405,8 @@ class Admin extends CI_Controller
         $page_data['city'] = $this->custom_model->get_city($param2);
         $this->load->view('backend/index', $page_data);
     }
+
+
 	public function city_form($param1 = "", $param2 = "")
     {
         if ($this->session->userdata('admin_login') != true) {
@@ -424,7 +414,7 @@ class Admin extends CI_Controller
         }
 
         // CHECK ACCESS PERMISSION
-        check_permission('city');
+       check_permission('city');
 
         if ($param1 == "add_city") {
 
@@ -449,4 +439,9 @@ class Admin extends CI_Controller
 
 
 
+    
+
 }
+
+
+

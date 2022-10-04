@@ -94,7 +94,7 @@
 			<li class="side-nav-item <?php if ($page_name == 'admins' || $page_name == 'admin_add' || $page_name == 'admin_edit' || $page_name == 'admin_permission' || $page_name == 'instructors' || $page_name == 'instructor_add' || $page_name == 'instructor_edit' || $page_name == 'instructor_payout' || $page_name == 'instructor_settings' || $page_name == 'application_list' || $page_name == 'users' || $page_name == 'user_add' || $page_name == 'user_edit') : ?> active <?php endif; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'admins' || $page_name == 'admin_add' || $page_name == 'admin_edit' || $page_name == 'admin_permission' || $page_name == 'instructors' || $page_name == 'instructor_add' || $page_name == 'instructor_edit' || $page_name == 'instructor_payout' || $page_name == 'instructor_settings' || $page_name == 'application_list' || $page_name == 'users' || $page_name == 'user_add' || $page_name == 'user_edit') : ?> active <?php endif; ?>">
 					<i class="dripicons-box"></i>
-					<span> <?php echo get_phrase('users'); ?> </span>
+					<span> <?php echo get_phrase('admin'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
 				<ul class="side-nav-second-level" aria-expanded="false">
@@ -112,12 +112,89 @@
 								</li>
 							</ul>
 						</li>
-					<?php endif; ?>
-
+					<?php endif; ?>			
 				</ul>
 			</li>
 		<?php endif; ?>
 
 
-	</ul>
+		<?php if (has_permission('leads')) : ?>
+			<li class="side-nav-item <?php if ($page_name == 'leads' || $page_name == 'leadssource_add' || $page_name == 'leadssource_edit') echo 'active'; ?>">
+				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'leads' || $page_name == 'leadsource_add' || $page_name == 'leadssource_edit') : ?> active <?php endif; ?>">
+					<i class="dripicons-archive"></i>
+					<span> <?php echo get_phrase('leadsmanagement'); ?> </span>
+					<span class="menu-arrow"></span>
+				</a>
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('leads')) : ?>
+						<li class="<?php if ($page_name == 'leads_add' || $page_name == 'leads_add') echo 'active'; ?>">
+							<a href="<?php echo site_url('leads/leads/leads_view'); ?>"><?php echo get_phrase('leads'); ?></a>
+						</li>
+					<?php endif; ?>
+
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('leads')) : ?>
+						<li class="<?php if ($page_name == 'leadssource_add' || $page_name == 'leadssource_add') echo 'active'; ?>">
+							<a href="<?php echo site_url('leads/leadssource/leadssource'); ?>"><?php echo get_phrase('leads_source'); ?></a>
+						</li>
+					<?php endif; ?>
+
+					<?php if (has_permission('leads')) : ?>
+						<li class="<?php if ($page_name == 'leadssource_edit') echo 'active'; ?>">
+							<a href="<?php echo site_url('leads/leadsstatus/leadsstatus'); ?>"><?php echo get_phrase('leads_statuses'); ?></a>
+						</li>
+					<?php endif; ?>
+				</ul>
+			</li>
+		<?php endif; ?>
+
+
+		</ul>
+
+		<?php if (has_permission('user management')) : ?>
+			<li class="side-nav-item <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' || $page_name == 'manage_manager' || $page_name == 'manage_team') echo 'active'; ?>">
+				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' | $page_name == 'manage_manager' | $page_name == 'manage_team') : ?> active <?php endif; ?>">
+					<i class="dripicons-archive"></i>
+					<span> <?php echo get_phrase('Usermanagement'); ?> </span>
+					<span class="menu-arrow"></span>
+				</a>
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('user management')) : ?>
+						<li class="<?php if ($page_name == 'manage_role' || $page_name == 'manage_role') echo 'active'; ?>">
+							<a href="<?php echo site_url('group/role/manage_role'); ?>"><?php echo get_phrase('manage_role'); ?></a>
+						</li>
+					<?php endif; ?>
+
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('user management')) : ?>
+						<li class="<?php if ($page_name == 'manage_manager' || $page_name == 'manage_manager') echo 'active'; ?>">
+							<a href="<?php echo site_url('group/manager/manage_manager'); ?>"><?php echo get_phrase('manage_manager'); ?></a>
+						</li>
+					<?php endif; ?>
+
+					<?php if (has_permission('user management')) : ?>
+						<li class="<?php if ($page_name == 'manage_manager') echo 'active'; ?>">
+							<a href="<?php echo site_url('group/department/manage_department'); ?>"><?php echo get_phrase('manage_department'); ?></a>
+						</li>
+					<?php endif; ?>
+
+					<?php if (has_permission('user management')) : ?>
+						<li class="<?php if ($page_name == 'manage_team') echo 'active'; ?>">
+							<a href="<?php echo site_url(''); ?>"><?php echo get_phrase('manage_admin'); ?></a>
+						</li>
+					<?php endif; ?>
+
+
+				</ul>
+			</li>
+		<?php endif; ?>
+
+					</ul>
+
+
+	
 </div>

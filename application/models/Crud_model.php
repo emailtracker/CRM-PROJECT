@@ -25,6 +25,19 @@ class Crud_model extends CI_Model
         return $this->db->get('category');
     }
 
+
+    
+    public function get_course($param1 = "")
+  {
+        if ($param1 != "") {
+           $this->db->where('id', $param1);
+        }
+        
+        return $this->db->get('category');
+    }
+
+
+
     public function get_category_details_by_id($id)
     {
         return $this->db->get_where('category', array('id' => $id));
