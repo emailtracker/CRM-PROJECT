@@ -2,7 +2,26 @@
   font-size: 25px;
   vertical-align: middle;
 }
-
+.topnav-navbar-dark {
+    background-color: #fff !important;
+}
+.left-side-menu-detached {
+    position: relative;
+    background: #313a46!important;
+   }
+   .left-side-menu-detached .side-nav-light .side-nav-link {
+    color: #fff !important;
+}
+.leftbar-user .leftbar-user-name {
+    font-weight: 700;
+    color: #fff !important;
+}
+.left-side-menu-detached .side-nav-light .side-nav-title {
+    color: #fff !important;
+}
+.left-side-menu-detached .side-nav-light .side-nav-second-level li.active>a, .left-side-menu-detached .side-nav-light .side-nav-third-level li.active>a {
+    color: #fff !important;
+}
 .alignToTitle {
   float: right;
 }
