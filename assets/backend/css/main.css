@@ -12,6 +12,20 @@
    .left-side-menu-detached .side-nav-light .side-nav-link {
     color: #fff !important;
 }
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #e86613 !important;
+    border-color: #e86613 !important;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #e86613 !important;
+    border-color: #e66910 !important;
+}
+.btn-outline-primary {
+    color: #e86613 !important;
+    border-color: #e56812 !important;
+}
 .leftbar-user .leftbar-user-name {
     font-weight: 700;
     color: #fff !important;
