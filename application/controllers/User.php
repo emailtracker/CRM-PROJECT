@@ -28,9 +28,8 @@ class User extends CI_Controller
     {
         // IF ANY FUNCTION DOES NOT REQUIRE PUBLIC INSTRUCTOR, PUT THE NAME HERE.
         $unprotected_routes = ['save_course_progress'];
-
         if (!in_array($method, $unprotected_routes)) {
-            if (get_settings('allow_instructor') != 1) {
+            if (get_settings('allow_campaign_manager') != 1) {
                 redirect(site_url('home'), 'refresh');
             }
         }
@@ -39,11 +38,9 @@ class User extends CI_Controller
     public function instructor_authorization($method)
     {
         // IF THE USER IS NOT AN INSTRUCTOR HE/SHE CAN NEVER ACCESS THE OTHER FUNCTIONS EXCEPT FOR BELOW FUNCTIONS.
-        if ($this->session->userdata('is_instructor') != 1) {
-            $unprotected_routes = ['become_an_instructor', 'manage_profile', 'save_course_progress', 'start_quiz', 'submit_quiz_answer', 'finish_quize_submission'];
-
+        if ($this->session->userdata('is_campaign_manager') != 1) {
             if (!in_array($method, $unprotected_routes)) {
-                redirect(site_url('user/become_an_instructor'), 'refresh');
+                redirect(site_url('login/logout'), 'refresh');
             }
         }
     }

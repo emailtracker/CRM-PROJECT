@@ -708,6 +708,10 @@ class User_model extends CI_Model
             $this->session->set_userdata('role', get_user_role('user_role', $row->id));
             $this->session->set_userdata('name', $row->first_name . ' ' . $row->last_name);
             $this->session->set_userdata('is_instructor', $row->is_instructor);
+			$this->session->set_userdata('is_campaign_manager', $row->is_campaign_manager);
+			$this->session->set_userdata('is_sales_manager', $row->is_sales_manager);
+			$this->session->set_userdata('is_campaign_team', $row->is_campaign_team);
+			$this->session->set_userdata('is_sales_team', $row->is_sales_team);
             $this->session->set_flashdata('flash_message', get_phrase('welcome') . ' ' . $row->first_name . ' ' . $row->last_name);
             if ($row->role_id == 1) {
                 $this->session->set_userdata('admin_login', '1');
@@ -717,7 +721,7 @@ class User_model extends CI_Model
                 if($this->session->userdata('url_history')){
                     redirect($this->session->userdata('url_history'), 'refresh');
                 }
-                redirect(site_url('home'), 'refresh');
+                redirect(site_url('user'), 'refresh');
             }
         } else {
             $this->session->set_flashdata('error_message', get_phrase('invalid_login_credentials'));

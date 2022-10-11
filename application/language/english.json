@@ -1196,5 +1196,9 @@
     "manage_department": "Manage department",
     "department": "Department",
     "add_new_department": "Add new department",
-    "add_department": "Add department"
+    "add_department": "Add department",
+    "campaign_manager_dashboard": "Campaign manager dashboard",
+    "short_title_about_yourself": "Short title about yourself",
+    "your_skills": "Your skills",
+    "campaign_manager": "Campaign manager"
 }
