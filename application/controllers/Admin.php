@@ -13,8 +13,10 @@ class Admin extends CI_Controller
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         $this->output->set_header('Pragma: no-cache');
 
+        //$this->user_model->check_session_data('admin');
         $this->user_model->check_session_data('admin');
         $this->load->helper('url');
+        
     }
 
 
@@ -30,12 +32,21 @@ class Admin extends CI_Controller
     }
     public function dashboard()
     {
-        if ($this->session->userdata('admin_login') != true) {
+        if ($this->session->userdata('admin_login') == true) {
+            $page_data['page_name'] = 'dashboard';
+            $page_data['page_title'] = get_phrase('dashboard');
+            $this->load->view('backend/index.php', $page_data);
+        }
+        else if ($this->session->userdata('campaign_manager_login') == true) {
+            $page_data['page_name'] = 'dashboard';
+            $page_data['page_title'] = get_phrase('dashboard');
+            $this->load->view('backend/index.php', $page_data);
+        }
+        else
+        {
             redirect(site_url('login'), 'refresh');
         }
-        $page_data['page_name'] = 'dashboard';
-        $page_data['page_title'] = get_phrase('dashboard');
-        $this->load->view('backend/index.php', $page_data);
+        
     }
 
     public function categories($param1 = "", $param2 = "")

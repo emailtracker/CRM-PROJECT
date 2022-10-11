@@ -36,14 +36,14 @@
                 
                   
                   <td>
-                    <div class="dropright dropright">
+                  <div class="dropright dropright">
                       <button type="button" class="btn btn-sm btn-outline-primary btn-rounded btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="mdi mdi-dots-vertical"></i>
                       </button>
                       <ul class="dropdown-menu">
-                        <a class="dropdown-item"href="<?php echo site_url(''); ?>"><?php echo get_phrase('edit'); ?></a></li>
+                        <a class="dropdown-item"href="<?php echo site_url('group/department_form/edit_department/'.$department['id']); ?>"><?php echo get_phrase('edit'); ?></a></li>
 
-                        <li><a class="dropdown-item" href="#" onclick="confirm_modal('');"><?php echo get_phrase('delete'); ?></a></li>
+                        <li><a class="dropdown-item" href="#" onclick="confirm_modal('<?php echo site_url('group/department/delete/' . $department['id']); ?>');"><?php echo get_phrase('delete'); ?></a></li>
                       </ul>
                     </div>
                   </td>
