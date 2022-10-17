@@ -47,4 +47,23 @@ class Home extends CI_Controller
         $page_data['page_title'] = site_phrase('login');
         $this->load->view('frontend/' . get_frontend_settings('theme') . '/index', $page_data);
     }
+	public function profile($param1 = "")
+    {
+        if ($this->session->userdata('user_login') != true) {
+            redirect(site_url('home'), 'refresh');
+        }
+
+        if ($param1 == 'user_profile') {
+            $page_data['page_name'] = "user_profile";
+            $page_data['page_title'] = site_phrase('user_profile');
+        } elseif ($param1 == 'user_credentials') {
+            $page_data['page_name'] = "user_credentials";
+            $page_data['page_title'] = site_phrase('credentials');
+        } elseif ($param1 == 'user_photo') {
+            $page_data['page_name'] = "update_user_photo";
+            $page_data['page_title'] = site_phrase('update_user_photo');
+        }
+        $page_data['user_details'] = $this->user_model->get_user($this->session->userdata('user_id'));
+        $this->load->view('frontend/' . get_frontend_settings('theme') . '/index', $page_data);
+    }
 }

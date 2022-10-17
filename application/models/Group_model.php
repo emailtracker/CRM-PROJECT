@@ -89,58 +89,59 @@ class Group_model extends CI_Model
 	
 public function addmanager()
 {
-    $data['name']   = html_escape($this->input->post('name'));
+    $data['first_name']   = html_escape($this->input->post('first_name'));
     $data['email']   = html_escape($this->input->post('email'));
     $data['phone']   = html_escape($this->input->post('phone'));
+    $data['department_id']   = html_escape($this->input->post('department_id'));
     $data['role_id']   = html_escape($this->input->post('role_id'));
     $data['designation']   = html_escape($this->input->post('designation'));
-    $data['name']   = html_escape($this->input->post('name'));
-    $data['password']   = html_escape($this->input->post('password'));
+    $data['password']   = sha1(html_escape($this->input->post('password')));
+ 
     
   
 
-    // CHECK IF THE SOURCE NAME ALREADY EXISTS
-    $this->db->where('name', $data['name']);
-    $previous_data = $this->db->get('manager')->num_rows();
+    // CHECK IF THE MANAGER ALREADY EXISTS
+    $this->db->where('email', $data['email']);
+    $previous_data = $this->db->get('users')->num_rows();
 
     if ($previous_data == 0) {
 
-        $this->db->insert('manager', $data);
+        $this->db->insert('users', $data);
         return true;
     }
        return false;
 } 
         
 
-public function get_manager($param1 = "")
+public function get_manager($id = 0)
 {
-    if ($param1 != "") {
-         $this->db->where('id', $param1);
-     }
-   
-     return $this->db->get('manager');
+    if ($id > 0) {
+        return $this->db->get_where('users', array('id' => $id, 'role_id' => 3));
+    } else {
+        return $this->db->get_where('users', array('role_id' => 3));
+    }
  }
 
  public function get_manager_details_by_id($id)
  {
     
-     return $this->db->get_where('manager', array('id' => $id));
+     return $this->db->get_where('users', array('id' => $id));
  }
 
  public function edit_manager($param1)
  {
-    $data['name']   = html_escape($this->input->post('name'));
+    $data['first_name']   = html_escape($this->input->post('first_name'));
     $data['email']   = html_escape($this->input->post('email'));
     $data['phone']   = html_escape($this->input->post('phone'));
+    $data['department_id']   = html_escape($this->input->post('department_id'));
     $data['role_id']   = html_escape($this->input->post('role_id'));
     $data['designation']   = html_escape($this->input->post('designation'));
-    $data['name']   = html_escape($this->input->post('name'));
-    $data['password']   = html_escape($this->input->post('password'));
+    $data['password']   = sha1(html_escape($this->input->post('password')));
    
 
      // CHECK IF THE SOURCE NAME ALREADY EXISTS
-      $this->db->where('name', $data['name']);
-     $previous_data = $this->db->get('manager')->result_array();
+      $this->db->where('email', $data['email']);
+     $previous_data = $this->db->get('users')->result_array();
      $checker = true;
      foreach ($previous_data as $row) {
          if ($row['id'] != $param1) {
@@ -152,7 +153,7 @@ public function get_manager($param1 = "")
      if ($checker) {
          
          $this->db->where('id', $param1);
-         $this->db->update('manager', $data);
+         $this->db->update('users', $data);
 
          return true;
      }
@@ -162,7 +163,7 @@ public function get_manager($param1 = "")
  public function delete_manager($id)
  {
              $this->db->where('id', $id);
-             $this->db->delete('manager');
+             $this->db->delete('users');
  }
 
  public function add_department()
@@ -229,8 +230,149 @@ public function get_manager($param1 = "")
      return $this->db->get_where('department', array('id' => $id));
  }
 
+
+ public function add_team()
+{
+    $data['first_name']   = html_escape($this->input->post('first_name'));
+    $data['email']   = html_escape($this->input->post('email'));
+    $data['phone']   = html_escape($this->input->post('phone'));
+    $data['department_id']   = html_escape($this->input->post('department_id'));
+    $data['role_id']   = html_escape($this->input->post('role_id'));
+    $data['manager_id']   = html_escape($this->input->post('manager_id'));
+    $data['designation']   = html_escape($this->input->post('designation'));
+    $data['password']   = sha1(html_escape($this->input->post('password')));
+    
+  
+
+    // CHECK IF THE Team Member EMAIL ALREADY EXISTS
+    $this->db->where('email', $data['email']);
+    $previous_data = $this->db->get('users')->num_rows();
+
+    if ($previous_data == 0) {
+
+        $this->db->insert('users', $data);
+        return true;
+    }
+       return false;
+} 
+
+public function get_team($id = 0)
+ {
+    if ($id > 0) {
+        return $this->db->get_where('users', array('id' => $id, 'role_id' => 4));
+    } else {
+        return $this->db->get_where('users', array('role_id' => 4));
+    }
+  }
+
+  
+ public function edit_team($param1)
+ {
+    $data['first_name']   = html_escape($this->input->post('first_name'));
+    $data['email']   = html_escape($this->input->post('email'));
+    $data['phone']   = html_escape($this->input->post('phone'));
+    $data['department_id']   = html_escape($this->input->post('department_id'));
+    $data['role_id']   = html_escape($this->input->post('role_id'));
+    $data['manager_id']   = html_escape($this->input->post('manager_id'));
+    $data['designation']   = html_escape($this->input->post('designation'));
+    $data['password']   = sha1(html_escape($this->input->post('password')));
+   
+
+     // CHECK IF THE EMAIL ALREADY EXISTS
+      $this->db->where('email', $data['email']);
+     $previous_data = $this->db->get('users')->result_array();
+     $checker = true;
+     foreach ($previous_data as $row) {
+         if ($row['id'] != $param1) {
+             $checker = false;
+             break;
+         }
+     }
+
+     if ($checker) {
+         
+         $this->db->where('id', $param1);
+         $this->db->update('users', $data);
+
+         return true;
+     }
+     return false;
+ }
+
+ public function delete_team($id)
+ {
+             $this->db->where('id', $id);
+             $this->db->delete('users');
+ }
+ 
+ public function get_team_details_by_id($id)
+ {
+    
+     return $this->db->get_where('users', array('id' => $id));
+ }
+
+
+ 	
+ public function add_mail()
+ {
+     $data['to_mail']   = html_escape($this->input->post('to_mail'));
+     $data['cc_mail']   = html_escape($this->input->post('cc_mail'));
+     $data['subject']   = html_escape($this->input->post('subject'));
+   
+     $previous_data = $this->db->insert('mail_information', $data);
+
+     if ($previous_data == 1) {
+
+
+        $config = Array(
+            
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 587,
+            'smtp_user' => 'aadhiya2610@gmail.com', // change it to yours
+            'smtp_pass' => 'Anusriju@261011', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+            );
+            $email = $this->input->post('email');
+            $subject = $this->input->post('subject');
+            $message = "<html>
+            <head>
+                <title></title>
+            </head>
+            <body>
+              
+              
+                <p>".$subject."</p>
+              
+            </body>
+            </html>";
+            
+    
+            $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('aadhiya2610@gmail.com'); // change it to yours
+            $this->email->to($email);// change it to yours
+            $this->email->subject($subject);
+           
+            if($this->email->send())
+            {
+                echo 'Email sent.';
+            }
+            else
+            {
+                show_error($this->email->print_debugger());
+            }
+         
+   
+ }
+
+
 }
 
+
+}
 
 
 

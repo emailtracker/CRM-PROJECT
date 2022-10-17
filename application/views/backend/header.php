@@ -27,10 +27,8 @@
                     <span class="account-position">
                         <?php
                             if(strtolower($this->session->userdata('role')) == 'user'){
-                                if($this->session->userdata('is_instructor')){
-                                    echo get_phrase('instructor');
-                                }else{
-                                    echo get_phrase('student');
+                                if($this->session->userdata('is_campaign_manager')){
+                                    echo get_phrase('campaign_manager');
                                 }
                             }else{
                                 echo get_phrase('admin');

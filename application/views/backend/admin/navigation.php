@@ -184,7 +184,7 @@
 
 					<?php if (has_permission('user management')) : ?>
 						<li class="<?php if ($page_name == 'manage_team') echo 'active'; ?>">
-							<a href="<?php echo site_url(''); ?>"><?php echo get_phrase('manage_admin'); ?></a>
+							<a href="<?php echo site_url('group/team/manage_team'); ?>"><?php echo get_phrase('manage_team'); ?></a>
 						</li>
 					<?php endif; ?>
 
@@ -194,10 +194,6 @@
 		<?php endif; ?>
 
 					</ul>
-
-			
-
-				
 
 			<?php if (has_permission('email template')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' || $page_name == 'manage_manager' || $page_name == 'manage_team') echo 'active'; ?>">
@@ -225,7 +221,7 @@
 
 					</ul>
 
-					<!-- <?php if (has_permission('sales team')) : ?>
+					<?php if (has_permission('sales team')) : ?>
 						<li class="side-nav-item <?php if ($page_name == 'sales_team' || $page_name == 'sales_admin'|| $page_name == 'sales_manager') echo 'active'; ?> ">
 							<a href="javascript: void(0)" class="side-nav-link <?php if($page_name == 'sales_team' || $page_name == 'sales_admin' || $page_name == 'sales _manager') : ?> active <?php endif ; ?>">
 								<i class="dripicons-archive"></i>
@@ -253,12 +249,24 @@
                            </ul>
 
 
- -->
-			
+					<?php if (has_permission('mail')) : ?>
+			<li class="side-nav-item <?php if ($page_name == 'mail' || $page_name == 'mail_add' || $page_name == 'mail_starred' || $page_name == 'mail_sent' || $page_name == 'mail_trash' || $page_name == 'mail_edit') echo 'active'; ?>">
+				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'mail' || $page_name == 'mail_add' || $page_name == 'mail_sent' || $page_name == 'mail_trash' || $page_name == 'mail_trash' ) : ?> active <?php endif; ?>">
+					<i class="dripicons-archive"></i>
+					<span> <?php echo get_phrase('mail'); ?> </span>
+					<span class="menu-arrow"></span>
+				</a>
+				<ul class="side-nav-second-level" aria-expanded="false">
+					
+					<?php if (has_permission('manage_mail')) : ?>
+						<li class="<?php if ($page_name == 'manage_mail' || $page_name == 'mail_add' || $page_name == 'mail_starred') echo 'active'; ?>">
+							<a href="<?php echo site_url('group/mail/manage_mail'); ?>"><?php echo get_phrase('manage_mail'); ?></a>
+						</li>
+					<?php endif; ?>		
+				</ul>
+			</li>
+		<?php endif; ?>
 
-				
-
-					 
 
 	
 </div>
