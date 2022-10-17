@@ -1,23 +1,24 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
-class Email_model extends CI_Model
+ <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+//v5.7
+class Emailtemplate extends CI_Model
 {
 
-	function __construct()
-	{
-		parent::__construct();
-		 /*cache control*/
+    function __construct()
+    {
+        parent::__construct();
+        /*cache control*/
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         $this->output->set_header('Pragma: no-cache');
-	}
-	
-    public function add_template()
+        
+    }
+    
+     public function add_template()
     {
         $data['template_name']   = html_escape($this->input->post('template_name'));
-        $data['body']   = html_escape($this->input->post('body'));
-        $data['remainder_interval_date']   = html_escape($this->input->post('remainder_interval_date'));
+      
 
-        // CHECK IF THE TEMPLATE NAME NAME ALREADY EXISTS
+        // CHECK IF THE SOURCE NAME ALREADY EXISTS
         $this->db->where('template_name', $data['template_name']);
         $previous_data = $this->db->get('email_template')->num_rows();
 
@@ -49,14 +50,11 @@ class Email_model extends CI_Model
 
     public function edit_mailtemplate($param1)
     {
-
         $data['template_name']   = html_escape($this->input->post('template_name'));
-        $data['body']   =   html_escape($this->input->post('body'));
-        $data['remainder_interval_date']   = html_escape($this->input->post('remainder_interval_date'));
-
+      
 
         // CHECK IF THE SOURCE NAME ALREADY EXISTS
-         $this->db->where('template_name', $data['template_name']);
+         $this->db->where('templatename', $data['templatename']);
         $previous_data = $this->db->get('email_template')->result_array();
         $checker = true;
         foreach ($previous_data as $row) {
@@ -67,7 +65,7 @@ class Email_model extends CI_Model
         }
 
         if ($checker) {
-        
+            
             $this->db->where('id', $param1);
             $this->db->update('email_template', $data);
 
@@ -75,11 +73,9 @@ class Email_model extends CI_Model
         }
         return false;
     }
-   
 
 
-
-	 public function delete_mailtemplate($id)
+    public function delete_mailtemplate($id)
     { 
                 //$this->db->where('id', $id);
                 // $this->db->delete('email_template',arr);
@@ -87,10 +83,6 @@ class Email_model extends CI_Model
                 $this->db -> delete('email_template');
                 redirect(site_url('emailtemplate/mailtemplate/manage_template'),'refresh');
     }
-        
-        
-
 
   
-
-}
+}    

@@ -195,7 +195,58 @@
 
 					</ul>
 
-				
+			<?php if (has_permission('email template')) : ?>
+			<li class="side-nav-item <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' || $page_name == 'manage_manager' || $page_name == 'manage_team') echo 'active'; ?>">
+				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' | $page_name == 'manage_manager' | $page_name == 'manage_team') : ?> active <?php endif; ?>">
+					<i class="dripicons-archive"></i>
+					<span> <?php echo get_phrase('email Template'); ?> </span>
+					<span class="menu-arrow"></span>
+				</a>
+
+			
+
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('manage_template')) : ?>
+						<li class="<?php if ($page_name == 'manage_template' || $page_name == 'manage_template') echo 'active'; ?>">
+					<a href="<?php echo site_url('emailtemplate/mailtemplate/manage_template'); ?>"><?php echo get_phrase('manage_template'); ?> </a>
+						</li>
+					<?php endif; ?>
+
+					
+
+				</ul>
+			 </li>
+		    <?php endif; ?>
+
+					</ul>
+
+					<?php if (has_permission('sales team')) : ?>
+						<li class="side-nav-item <?php if ($page_name == 'sales_team' || $page_name == 'sales_admin'|| $page_name == 'sales_manager') echo 'active'; ?> ">
+							<a href="javascript: void(0)" class="side-nav-link <?php if($page_name == 'sales_team' || $page_name == 'sales_admin' || $page_name == 'sales _manager') : ?> active <?php endif ; ?>">
+								<i class="dripicons-archive"></i>
+								<span><?php echo get_phrase('sales_team'); ?></span>
+								<span class="menu-arrow"></span>
+							</a>
+
+
+							<ul class="side-nav-second-level" aria-expanded="false">
+								<?php if(has_permission('sales_admin')) :?>
+								<li class="<?php if($page_name == 'sales_admin' || $page_name == 'sales_manager') echo 'active' ; ?>">
+									<a href="<?php echo site_url('');?>">
+										<?php echo get_phrase('sales_admin'); ?>
+									</a>
+									
+								</li>
+								<?php endif; ?>
+							</ul>
+
+
+						</li>
+
+
+						<?php endif; ?>
+                           </ul>
 
 
 					<?php if (has_permission('mail')) : ?>
@@ -215,8 +266,6 @@
 				</ul>
 			</li>
 		<?php endif; ?>
-
-					
 
 
 	

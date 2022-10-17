@@ -171,6 +171,15 @@ public function get_role($param1 = "")
   
     return $this->db->get('role');
 }
+public function get_mailtemplate($param1 = "")
+{
+    if ($param1 != "") {
+        $this->db->where('id', $param1);
+    }
+  
+    return $this->db->get('email_template');
+}
+
 
 
 public function getcityofcountry($cc_countryid){

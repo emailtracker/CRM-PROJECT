@@ -1,4 +1,5 @@
-<?php
+
+ <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 //v5.7
 class Group_model extends CI_Model
