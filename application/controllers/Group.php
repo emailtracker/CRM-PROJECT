@@ -1,4 +1,4 @@
-<?php
+  <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Group extends CI_Controller
@@ -157,7 +157,7 @@ public function manager_form($param1 = "", $param2 = "")
     if ($param1 == "addmanager") {
 
         $page_data['page_name'] = 'group/manager_add';
-      //  $page_data['role'] = $this->group_model->get_role()->result_array();
+       // $page_data['role'] = $this->group_model->get_role()->result_array();
         $page_data['page_title'] = get_phrase('add_manager');
     }
 

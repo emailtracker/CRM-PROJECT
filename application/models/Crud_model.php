@@ -28,7 +28,7 @@ class Crud_model extends CI_Model
 
     
     public function get_course($param1 = "")
-  {
+   {
         if ($param1 != "") {
            $this->db->where('id', $param1);
         }
