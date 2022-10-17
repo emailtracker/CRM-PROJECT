@@ -1197,24 +1197,6 @@
     "department": "Department",
     "add_new_department": "Add new department",
     "add_department": "Add department",
-    "email_template": "Email template",
-    "manage_email_template": "Manage email template",
-    "manage_template": "Manage template",
-    "add_new_template": "Add new template",
-    "add_template": "Add template",
-    "template_name": "Template name",
-    "body": "Body",
-    "remainder_interval_date": "Remainder interval date",
-    "mailtemplate": "Mailtemplate",
-    "email_form": "Email form",
-    "mail_template": "Mail template",
-    "template_name_already_exists": "Template name already exists",
-    "edit_template": "Edit template",
-    "update_email_template": "Update email template",
-    "update_template_form": "Update template form",
-    "templatename": "Templatename",
-    "sales_team": "Sales team",
-    "sales_admin": "Sales admin"
     "campaign_manager_dashboard": "Campaign manager dashboard",
     "short_title_about_yourself": "Short title about yourself",
     "your_skills": "Your skills",
@@ -1247,7 +1229,6 @@
     "inbox": "Inbox",
     "sent": "Sent",
     "trash": "Trash",
-
     "draft": "Draft",
     "manage_leads": "Manage leads",
     "manage_leadsource": "Manage leadsource",
@@ -1268,6 +1249,8 @@
     "campaign_mnager": "Campaign mnager",
     "export_leads": "Export leads",
     "export_csv": "Export csv",
-
-    "draft": "Draft"
+    "manage_template": "Manage template",
+    "sales_admin": "Sales admin",
+    "add_new_template": "Add new template",
+    "mail_template": "Mail template"
 }
