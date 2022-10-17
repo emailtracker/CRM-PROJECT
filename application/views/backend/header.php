@@ -28,7 +28,16 @@
                         <?php
                             if(strtolower($this->session->userdata('role')) == 'user'){
                                 if($this->session->userdata('is_campaign_manager')){
-                                    echo get_phrase('campaign_manager');
+                                    echo get_phrase('campaign_mnager');
+                                }
+                                elseif($this->session->userdata('is_sales_manager')){
+                                    echo get_phrase('sales_manager');
+                                } 
+                                elseif($this->session->userdata('is_campaign_team')){
+                                    echo get_phrase('campaign_team');
+                                }
+                                elseif($this->session->userdata('is_sales_team')){
+                                    echo get_phrase('sales_team');
                                 }
                             }else{
                                 echo get_phrase('admin');

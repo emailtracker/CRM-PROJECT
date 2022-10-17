@@ -50,7 +50,7 @@
 		<?php if (has_permission('city')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'city' || $page_name == 'city_add' || $page_name == 'city_edit') echo 'active'; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'city' || $page_name == 'city_add' || $page_name == 'city_edit') : ?> active <?php endif; ?>">
-					<i class="dripicons-archive"></i>
+					<i class="dripicons-store"></i>
 					<span> <?php echo get_phrase('city'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
@@ -74,7 +74,7 @@
 		<?php if (has_permission('course')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'courses' || $page_name == 'course_add' || $page_name == 'course_edit' || $page_name == 'categories' || $page_name == 'category_add' || $page_name == 'category_edit' || $page_name == 'coupons' || $page_name == 'coupon_add' || $page_name == 'coupon_edit' || $page_name == 'add_bundle' || $page_name == 'manage_course_bundle' || $page_name == 'edit_bundle' || $page_name == 'active_bundle_subscription_report' || $page_name == 'expire_bundle_subscription_report' || $page_name == 'bundle_invoice') echo 'active'; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'courses' || $page_name == 'course_add' || $page_name == 'course_edit' || $page_name == 'categories' || $page_name == 'category_add' || $page_name == 'category_edit' || $page_name == 'coupons' || $page_name == 'coupon_add' || $page_name == 'coupon_edit') : ?> active <?php endif; ?>">
-					<i class="dripicons-archive"></i>
+					<i class="dripicons-pamphlet"></i>
 					<span> <?php echo get_phrase('courses'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
@@ -93,7 +93,7 @@
 		<?php if (has_permission('user')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'admins' || $page_name == 'admin_add' || $page_name == 'admin_edit' || $page_name == 'admin_permission' || $page_name == 'instructors' || $page_name == 'instructor_add' || $page_name == 'instructor_edit' || $page_name == 'instructor_payout' || $page_name == 'instructor_settings' || $page_name == 'application_list' || $page_name == 'users' || $page_name == 'user_add' || $page_name == 'user_edit') : ?> active <?php endif; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'admins' || $page_name == 'admin_add' || $page_name == 'admin_edit' || $page_name == 'admin_permission' || $page_name == 'instructors' || $page_name == 'instructor_add' || $page_name == 'instructor_edit' || $page_name == 'instructor_payout' || $page_name == 'instructor_settings' || $page_name == 'application_list' || $page_name == 'users' || $page_name == 'user_add' || $page_name == 'user_edit') : ?> active <?php endif; ?>">
-					<i class="dripicons-box"></i>
+					<i class="dripicons-user-group"></i>
 					<span> <?php echo get_phrase('admin'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
@@ -121,7 +121,7 @@
 		<?php if (has_permission('leads')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'leads' || $page_name == 'leadssource_add' || $page_name == 'leadssource_edit') echo 'active'; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'leads' || $page_name == 'leadsource_add' || $page_name == 'leadssource_edit') : ?> active <?php endif; ?>">
-					<i class="dripicons-archive"></i>
+					<i class="dripicons-user-id"></i>
 					<span> <?php echo get_phrase('leadsmanagement'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
@@ -156,7 +156,7 @@
 		<?php if (has_permission('user management')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' || $page_name == 'manage_manager' || $page_name == 'manage_team') echo 'active'; ?>">
 				<a href="javascript: void(0);" class="side-nav-link <?php if ($page_name == 'user_management' || $page_name == 'manage_group' || $page_name == 'manage_admin' | $page_name == 'manage_manager' | $page_name == 'manage_team') : ?> active <?php endif; ?>">
-					<i class="dripicons-archive"></i>
+					<i class="dripicons-user-group"></i>
 					<span> <?php echo get_phrase('Usermanagement'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>

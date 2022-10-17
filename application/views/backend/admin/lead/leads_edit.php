@@ -18,7 +18,7 @@ $leads_details = $this->custom_model->get_leads_details_by_id($leads_id)->row_ar
         <div class="col-lg-12">
           <h4 class="mb-3 header-title"><?php echo get_phrase('update_lead_form'); ?></h4>
 
-          <form class="required-form" action="<?php echo site_url('admin/leads/edit/'.$leads_id); ?>" method="post" enctype="multipart/form-data">		    		
+          <form class="required-form" action="<?php echo site_url('leads/leads/edit/'.$leads_id); ?>" method="post" enctype="multipart/form-data">		    		
 		    	
                     
 	                     <div class="form-group">
@@ -139,7 +139,7 @@ $leads_details = $this->custom_model->get_leads_details_by_id($leads_id)->row_ar
 
             <div class="form-group">
 		    			<label for="cc_countryid"><?php echo get_phrase('lead_status'); ?></label>
-		    			<select class="form-control select2" data-toggle="select2" name="leadststus" id="leadstatus">
+		    			<select class="form-control select2" data-toggle="select2" name="leadstatus" id="leadstatus">
 		    				<option value=""><?php echo get_phrase('select_a_lead_status'); ?></option>
 		    				<?php foreach($this->custom_model-> get_leads_status()->result_array() as $leadstatus): ?>
 		    					<option value="<?php echo $leadstatus['id']; ?>" <?php if($leadstatus['id'] == $leads_details['leadstatus'])echo 'selected'; ?>><?php echo $leadstatus['leadsstatus']; ?></option>
@@ -148,7 +148,7 @@ $leads_details = $this->custom_model->get_leads_details_by_id($leads_id)->row_ar
 		    		</div>
         
 
-                   
+					
 	
             <button type="button" class="btn btn-primary" onclick="checkRequiredFields()"><?php echo get_phrase("submit"); ?></button>
           </form>

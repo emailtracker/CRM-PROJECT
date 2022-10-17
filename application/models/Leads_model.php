@@ -185,9 +185,6 @@ public function getcategory($parent){
     return $this->db->where('parent', $parent)->get(category)->result();
 }
 
-
-
-
 public function add_leads()
 {
     $data['leads']   = html_escape($this->input->post('leads'));
@@ -215,6 +212,7 @@ public function addleads ()
         $data['email']   = html_escape($this->input->post('email'));
         $data['phonenumber'] = html_escape($this->input->post('phonenumber'));
         $data['website']   = html_escape($this->input->post('website'));
+        $data['company']   = html_escape($this->input->post('company'));
 		$data['designation']   = html_escape($this->input->post('designation'));
         $data['address']   = html_escape($this->input->post('address'));
         $data['category']   = html_escape($this->input->post('category'));
@@ -253,8 +251,6 @@ public function addleads ()
 		//$this->db->or_where('cc_status  ', 1);
         return $this->db->get('leads');
     }
-
-
     
     public function get_leads_details_by_id($id)
     {
@@ -269,6 +265,7 @@ public function addleads ()
         $data['email']   = html_escape($this->input->post('email'));
         $data['phonenumber'] = html_escape($this->input->post('phonenumber'));
         $data['website']   = html_escape($this->input->post('website'));
+        $data['company']   = html_escape($this->input->post('company'));
 		$data['designation']   = html_escape($this->input->post('designation'));
         $data['address']   = html_escape($this->input->post('address'));
         $data['category']   = html_escape($this->input->post('category'));
@@ -301,11 +298,6 @@ public function addleads ()
             return true;
         }
 
-        if( $update == true){
-
-            $data['updated_date'] = sdate('Y-m-d H:i:s');
-
-        }
         return false;
     }
 
@@ -315,8 +307,16 @@ public function addleads ()
 		        $this->db->delete('leads');
     }
 
-  
+    function export_data()
+ {
 
+  $this->db->select("name, email,website, phonenumber, designation, company, country, city, category, course");
+  $this->db->from('leads');
+  return $this->db->get();
+
+ }
+
+  
 
 }
 

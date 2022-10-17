@@ -15,7 +15,47 @@
                             }else{
                                 echo get_phrase('dashboard');
                             }
-                        ?></h4>
+                        ?>
+                        
+                        <?php
+                            if(strtolower($this->session->userdata('role')) == 'user'){
+                                if($this->session->userdata('is_sales_manager')){
+                                    echo get_phrase('sales_manager_dashboard');
+                                }
+                            }else{
+                                echo get_phrase('dashboard');
+                            }
+                        ?>
+
+<?php
+                            if(strtolower($this->session->userdata('role')) == 'user'){
+                                if($this->session->userdata('is_sales_team')){
+                                    echo get_phrase('Sales_team_dashboard');
+                                }
+                            }else{
+                                echo get_phrase('dashboard');
+                            }
+                        ?>
+
+<?php
+                            if(strtolower($this->session->userdata('role')) == 'user'){
+                                if($this->session->userdata('is_campaign_team')){
+                                    echo get_phrase('campaign_team_dashboard');
+                                }
+                            }else{
+                                echo get_phrase('dashboard');
+                            }
+                        ?>
+
+
+                        
+                    
+                    
+                    
+                    
+                    
+                    
+                    </h4>
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div><!-- end col-->

@@ -28,14 +28,150 @@
 			<?php endif; ?>
 		<?php endif; ?>
 
+		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
+			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leads/leads_view'); ?>" class="side-nav-link <?php if ($page_name == 'leads_view') echo 'active'; ?>">
+						<i class="dripicons-user-group"></i>
+						<span><?php echo get_phrase('leads'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
+			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leadssource/leadssource'); ?>" class="side-nav-link <?php if ($page_name == 'leadsource') echo 'active'; ?>">
+						<i class="dripicons-user-id"></i>
+						<span><?php echo get_phrase('leadsource'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
+			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('user/country'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-archive"></i>
+						<span><?php echo get_phrase('country'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
+			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('user/city'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-store"></i>
+						<span><?php echo get_phrase('city'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
+			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('user/categories'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-pamphlet"></i>
+						<span><?php echo get_phrase('course'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_sales_manager') == 0) : ?>
+			<?php if ($this->session->userdata('is_sales_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('user/dashboard'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-view-apps"></i>
+						<span><?php echo get_phrase('dashboard'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_sales_manager') == 0) : ?>
+			<?php if ($this->session->userdata('is_sales_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leadsstatus/leadsstatus'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-meter"></i>
+						<span><?php echo get_phrase('leadsstatus'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_sales_manager') == 0) : ?>
+			<?php if ($this->session->userdata('is_sales_manager')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leads/leads_view'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-user-group"></i>
+						<span><?php echo get_phrase('leads'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_sales_team') == 0) : ?>
+			<?php if ($this->session->userdata('is_sales_team')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leads/leads_view'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-user-group"></i>
+						<span><?php echo get_phrase('leads'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if (get_settings('allow_campaign_team') == 0) : ?>
+			<?php if ($this->session->userdata('is_campaign_team')) : ?>
+				<li class="side-nav-item">
+					<a href="<?php echo site_url('leads/leads/leads_view'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+						<i class="dripicons-user-group"></i>
+						<span><?php echo get_phrase('leads'); ?></span>
+					</a>
+				</li>
+				
+			<?php else : ?>
+				
+			<?php endif; ?>
+		<?php endif; ?>
 
 
-		<li class="side-nav-item">
-			<a href="<?php echo site_url('home/profile/user_profile'); ?>" class="side-nav-link">
-				<i class="dripicons-user"></i>
-				<span><?php echo get_phrase('manage_profile'); ?></span>
-			</a>
-		</li>
+
+
+		
+
 
 		
 

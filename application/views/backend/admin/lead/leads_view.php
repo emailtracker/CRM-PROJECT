@@ -3,7 +3,9 @@
     <div class="card">
       <div class="card-body">
         <h4 class="page-title"> <i class="mdi mdi-web title_icon"></i> <?php echo get_phrase('leads'); ?>
-          <a href="<?php echo site_url('leads/leads_form/addleads'); ?>" class="btn btn-outline-primary btn-rounded alignToTitle mr-1"><i class="mdi mdi-plus"></i> <?php echo get_phrase('add_new_leads'); ?></a>
+        <a href="<?php echo site_url('leads/leads_form/addleads'); ?>" class="btn btn-outline-primary btn-rounded alignToTitle mr-1"><i class="mdi mdi-plus"></i> <?php echo get_phrase('add_new_leads'); ?></a>
+
+          <a href="<?php echo site_url('leads/export'); ?>" class="btn btn-outline-primary btn-rounded alignToTitle mr-1"><i class="mdi mdi-publish"></i> <?php echo get_phrase('Export leads'); ?></a>
         </h4>
       </div> <!-- end card body-->
     </div> <!-- end card -->
@@ -18,11 +20,9 @@
           <table id="basic-datatable" class="table table-striped table-centered mb-0">
             <thead>
               <tr>
+                <th><?php echo get_phrase('Date'); ?></th>
                 <th><?php echo get_phrase('fullname'); ?></th>
                 <th><?php echo get_phrase('email'); ?></th>
-                <th><?php echo get_phrase('phone_number'); ?></th>
-              
-            
                 <th><?php echo get_phrase('country'); ?></th>
                 <th><?php echo get_phrase('city'); ?></th>
                 <th><?php echo get_phrase('Training Mode'); ?></th>
@@ -45,9 +45,10 @@
 
             foreach ($leads->result_array() as $leads) : ?>
             <tr class="gradeU">
+            <td><?php echo $leads['created_date']; ?></td>
             <td><?php echo $leads['name']; ?></td>
             <td><?php echo $leads['email']; ?></td>
-            <td><?php echo $leads['phonenumber']; ?></td>
+          
             
          
             <td>
@@ -139,23 +140,13 @@
 
                         <li><a class="dropdown-item" href="#" onclick="confirm_modal('<?php echo site_url('leads/leads/delete/' . $leads['lead_id']); ?>');"><?php echo get_phrase('delete'); ?></a></li>
                       </ul>
+                      </ul>
                     </div>
                   </td>
-                 
-                   
-                  	
-
-           
-              <td></td>
-                 
-                
-                      
-                    </div>
-                  
                 </tr>
-                <?php endforeach; ?>
+              <?php endforeach; ?>
             </tbody>
-          </table>
+         
         </div>
       </div>
     </div>

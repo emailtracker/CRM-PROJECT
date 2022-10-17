@@ -590,38 +590,38 @@ class User_model extends CI_Model
     }
 
     // GET MULTI INSTRUCTOR DETAILS WITH COURSE ID
-    public function get_multi_instructor_details_with_csv($csv)
-    {
-        $instructor_ids = explode(',', $csv);
-        $this->db->where_in('id', $instructor_ids);
-        return $this->db->get('users')->result_array();
-    }
+    // public function get_multi_instructor_details_with_csv($csv)
+    // {
+    //     $instructor_ids = explode(',', $csv);
+    //     $this->db->where_in('id', $instructor_ids);
+    //     return $this->db->get('users')->result_array();
+    // }
 
-    function quiz_submission_checker($quiz_id = ""){
-        $quiz_details = $this->crud_model->get_lessons('lesson', $quiz_id)->row_array();
-        $total_quiz_seconds = time_to_seconds($quiz_details['duration']);
+    // function quiz_submission_checker($quiz_id = ""){
+    //     $quiz_details = $this->crud_model->get_lessons('lesson', $quiz_id)->row_array();
+    //     $total_quiz_seconds = time_to_seconds($quiz_details['duration']);
 
-        $this->db->where('quiz_id', $quiz_id);
-        $this->db->where('user_id', $this->session->userdata('user_id'));
-        $query = $this->db->get('quiz_results');
-        if($query->num_rows() > 0){
-            $row = $query->row_array();
-            if(($total_quiz_seconds + $row['date_added']) < time() || $row['is_submitted'] == 1){
+    //     $this->db->where('quiz_id', $quiz_id);
+    //     $this->db->where('user_id', $this->session->userdata('user_id'));
+    //     $query = $this->db->get('quiz_results');
+    //     if($query->num_rows() > 0){
+    //         $row = $query->row_array();
+    //         if(($total_quiz_seconds + $row['date_added']) < time() || $row['is_submitted'] == 1){
 
-                if($row['is_submitted'] != 1){
-                    $this->db->where('quiz_id', $quiz_id);
-                    $this->db->where('user_id', $this->session->userdata('user_id'));
-                    $this->db->update('quiz_results', array('is_submitted' => 1));
-                }
+    //             if($row['is_submitted'] != 1){
+    //                 $this->db->where('quiz_id', $quiz_id);
+    //                 $this->db->where('user_id', $this->session->userdata('user_id'));
+    //                 $this->db->update('quiz_results', array('is_submitted' => 1));
+    //             }
 
-                return 'submitted';
-            }else{
-                return 'on_progress';
-            }
-        }else{
-            return 'no_data';
-        }
-    }
+    //             return 'submitted';
+    //         }else{
+    //             return 'on_progress';
+    //         }
+    //     }else{
+    //         return 'no_data';
+    //     }
+    // }
 
 
 

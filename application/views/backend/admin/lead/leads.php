@@ -1,8 +1,6 @@
 <!-- start page title -->
-
 <html>
-    <body>
-    
+<body>   
 <div class="row ">
     <div class="col-xl-12">
         <div class="card">
@@ -26,9 +24,7 @@
                         <label for="name"><?php echo get_phrase('fullname'); ?><span class="required">*</span></label>
                         <input type="text" class="form-control" id="name" name = "name" required>
                     </div>
-
-                   
-
+                
                     <div class="form-group ">
                         <label for="email"><?php echo get_phrase('email'); ?><span class="required">*</span></label>
                         <input type="text" class="form-control" id="email" name = "email" required>
@@ -95,9 +91,7 @@
 		    				<?php endforeach; ?>
 		    			</select>
 		    		</div>
-
-
-                    
+         
                     <div class="form-group ">
 		    			<label for="city"><?php echo get_phrase('preffered_city');  ?> </label>
 		    			<select class="form-control select2" data-toggle="select2" name="city" id="city" >
@@ -107,12 +101,10 @@
 		    			</select>
 		    		</div>
 
-
                     <div class="form-group ">
                         <label for="zip"><?php echo get_phrase('Zip Code'); ?></label>
                         <input type="text" class="form-control" id="zip" name = "zip" >
                     </div>
-
 
                     <div class="form-group ">
 		    			<label for="leadsource"><?php echo get_phrase('lead_source'); ?> </label>
@@ -122,10 +114,7 @@
 		    					<option value="<?php echo $leadssource['id']; ?>"><?php echo $leadssource['sourcename']; ?></option>
 		    				<?php endforeach; ?>
 		    			</select>
-		    		</div>
-
-                    
-
+		    		</div>                   
                     
                     <div class="form-group ">
 		    			<label for="role"><?php echo get_phrase('assign_to'); ?> </label>
@@ -135,10 +124,7 @@
 		    					<option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
 		    				<?php endforeach; ?>
 		    			</select>
-		    		</div>
-
-                   
-
+		    		</div>                
 
                     <div class="form-group ">
 		    			<label for="lead_status"><?php echo get_phrase('lead_status'); ?> </label>
@@ -155,10 +141,7 @@
                         <label for="description"><?php echo get_phrase('description'); ?></label>
                         <textarea class="form-control" id="description" name = "description" ></textarea>
                     </div>
-                           
-                            
-                            
-                                                                                            									             
+                                                                                                                                                    									             
                     <button type="button" class="btn btn-primary" onclick="checkRequiredFields()"><?php echo get_phrase("submit"); ?></button>
                 </form>
               </div>
@@ -178,7 +161,7 @@ var cc_countryid = $(this).val();
 if(cc_countryid!=""){
 
 $.ajax ({
-    url:'<?php echo base_url('admin/getcities') ?>',
+    url:'<?php echo base_url('leads/getcities') ?>',
     type: 'get',
     data: {cc_countryid:cc_countryid},
     
@@ -201,7 +184,7 @@ $("document"). ready(function(){
         var parent = $(this).val();
         if(parent!=""){
             $.ajax ({
-                url:'<?php echo base_url('admin/getcourse')?>',
+                url:'<?php echo base_url('leads/getcourse')?>',
                 type:'get',
                 data: {parent:parent},
 
@@ -218,12 +201,6 @@ $("document"). ready(function(){
 
 });
 
-
-
-
-
     </script>
                                 
-
-
 </html>
