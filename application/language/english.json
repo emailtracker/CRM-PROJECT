@@ -1252,5 +1252,6 @@
     "manage_template": "Manage template",
     "sales_admin": "Sales admin",
     "add_new_template": "Add new template",
-    "mail_template": "Mail template"
+    "mail_template": "Mail template",
+    "tmp": "Tmp"
 }

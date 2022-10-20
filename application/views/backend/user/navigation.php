@@ -157,7 +157,7 @@
 			<?php if ($this->session->userdata('is_campaign_team')) : ?>
 				<li class="side-nav-item">
 					<a href="<?php echo site_url('leads/leads/leads_view'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
-						<i class="dripicons-user-group"></i>
+						<i class="dripicons-view-apps"></i>
 						<span><?php echo get_phrase('leads'); ?></span>
 					</a>
 				</li>
@@ -166,6 +166,9 @@
 				
 			<?php endif; ?>
 		<?php endif; ?>
+
+
+
 
 
 

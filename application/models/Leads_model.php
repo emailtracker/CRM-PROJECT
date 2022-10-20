@@ -316,7 +316,7 @@ public function addleads ()
 		        $this->db->delete('leads');
     }
 
-    function export_data()
+public function export_data()
  {
 
   $this->db->select("name, email,website, phonenumber, designation, company, country, city, category, course");
@@ -325,7 +325,24 @@ public function addleads ()
 
  }
 
+ public function getData($country){
+    // If the $country parameter is not empty then the below condition will execute
+    if(!empty($country)){
+        $this->db->where('country',$country);  
+    }
+   return $this->db->get('leads')->result(); //leads is our database table name
+}
   
+public function set($Date1,$Date2){
+
+    $this->db->select('*');
+    $this->db->where('created_date >=', $Date1);
+    $this->db->where('created_date <=', $Date2);
+    $this->db->from('leads');
+    $query=$this->db->get();
+    return $query->result();
+
+}
 
 }
 

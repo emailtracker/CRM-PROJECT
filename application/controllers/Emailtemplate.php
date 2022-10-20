@@ -12,7 +12,6 @@ class Emailtemplate extends CI_Controller
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         $this->output->set_header('Pragma: no-cache');
 
-        $this->user_model->check_session_data('admin');
         
     }
 
@@ -20,10 +19,7 @@ class Emailtemplate extends CI_Controller
 	 public function mailtemplate($param1 = "",$param2 = "")
 	{
 
-	 	if ($this->session->userdata('admin_login') != true)
-	 	{
-	 		redirect(site_url('login'),'refresh');
-	 	}
+	 
     //  CHECK ACCESS PERMISSION
     check_permission('email_template');
 
@@ -74,10 +70,7 @@ class Emailtemplate extends CI_Controller
 	public function email_form($param1 = "",$param2 = "")
 	{
 
-		if ($this->session->userdata('admin_login') != true)
-		{
-			redirect(site_url('login'),'refresh');
-		}
+	
         
         // CHECK PERMISSION
         check_permission('mailtemplate');

@@ -202,52 +202,21 @@
 					<span> <?php echo get_phrase('email Template'); ?> </span>
 					<span class="menu-arrow"></span>
 				</a>
-
-			
-
-
 				<ul class="side-nav-second-level" aria-expanded="false">
 					<?php if (has_permission('manage_template')) : ?>
 						<li class="<?php if ($page_name == 'manage_template' || $page_name == 'manage_template') echo 'active'; ?>">
 					<a href="<?php echo site_url('emailtemplate/mailtemplate/manage_template'); ?>"><?php echo get_phrase('manage_template'); ?> </a>
 						</li>
-					<?php endif; ?>
-
-					
-
+					<?php endif; ?>	
 				</ul>
 			 </li>
 		    <?php endif; ?>
 
-					</ul>
+					
 
-					<?php if (has_permission('sales team')) : ?>
-						<li class="side-nav-item <?php if ($page_name == 'sales_team' || $page_name == 'sales_admin'|| $page_name == 'sales_manager') echo 'active'; ?> ">
-							<a href="javascript: void(0)" class="side-nav-link <?php if($page_name == 'sales_team' || $page_name == 'sales_admin' || $page_name == 'sales _manager') : ?> active <?php endif ; ?>">
-								<i class="dripicons-archive"></i>
-								<span><?php echo get_phrase('sales_team'); ?></span>
-								<span class="menu-arrow"></span>
-							</a>
+					
 
-
-							<ul class="side-nav-second-level" aria-expanded="false">
-								<?php if(has_permission('sales_admin')) :?>
-								<li class="<?php if($page_name == 'sales_admin' || $page_name == 'sales_manager') echo 'active' ; ?>">
-									<a href="<?php echo site_url('');?>">
-										<?php echo get_phrase('sales_admin'); ?>
-									</a>
-									
-								</li>
-								<?php endif; ?>
-							</ul>
-
-
-						</li>
-
-
-						<?php endif; ?>
-                           </ul>
-
+			
 
 					<?php if (has_permission('mail')) : ?>
 			<li class="side-nav-item <?php if ($page_name == 'mail' || $page_name == 'mail_add' || $page_name == 'mail_starred' || $page_name == 'mail_sent' || $page_name == 'mail_trash' || $page_name == 'mail_edit') echo 'active'; ?>">

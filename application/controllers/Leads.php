@@ -24,7 +24,7 @@ public function leads_data()
 
  function export()
  {
-    if ($this->session->userdata('is_sales_manager') == true || $this->session->userdata('is_sales_team') == true || $this->session->userdata('is_campaign_team') == true ) {
+    if ( $this->session->userdata('is_sales_team') == true || $this->session->userdata('is_campaign_team') == true ) {
 
         $this->session->set_flashdata('error_message', get_phrase('restricted'));
         redirect(site_url('leads/leads/leads_view'), 'refresh');
@@ -47,6 +47,11 @@ public function leads_data()
      }
      fclose($file); 
      exit; 
+ }
+
+ public function leads_details(){
+
+
  }
 
     public function leadssource($param1 = "", $param2 = "")
@@ -350,5 +355,31 @@ public function getcourse()
 
 
 
+public function country(){
+
+    $country = $_GET['country'];
+    $data = $this->db->get_where('leads', ['country'=>$country])->result();
 
 }
+   
+public function date(){
+
+    $this->forM_validation->set_rules('Date1', 'first date', 'trim|required');
+    $this->forM_validation->set_rules('Date2', 'last date', 'trim|required');
+    if($this->form_validation->run()==FALSE)
+    {
+        redirect(site_url('leads/leads/leads_view'), 'refresh'); 
+    }
+    else{
+      $Date1=$this->input->post('Date1');
+      $Date2=$this->input->post('Date2');
+      $store=$this->leads_model->set($Date1,$Date2);
+      echo json_encode($store);
+
+    }
+}
+
+
+
+}
+
