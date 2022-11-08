@@ -26,7 +26,16 @@
             <div class="content-page">
                 <div class="content">
                     <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                    <?php include $logged_in_user_role.'/'.$page_name.'.php';?>
+                    <?php 
+                    if($page_name == 'smtp_settings' || $page_name == 'email_template' || $page_name == 'mail_box')
+					{
+						include $logged_in_user_role.'/Email_configuration/'.$page_name.'.php';
+					}
+					else {
+						include $logged_in_user_role.'/'.$page_name.'.php';
+					}
+                    
+                    ?>
                     <!-- END PLACE PAGE CONTENT HERE -->
                 </div>
             </div>

@@ -346,6 +346,16 @@ class Admin extends CI_Controller
             }
             redirect(site_url('admin/country'), 'refresh');
         } 
+		if ($param1 == "import") {
+
+			 $response = $this->custom_model->import_country_file();
+            if ($response) {
+                $this->session->set_flashdata('flash_message', get_phrase('data_import_successfully'));
+            } else {
+                $this->session->set_flashdata('error_message', get_phrase('country_name_already_exists'));
+            }
+            redirect(site_url('admin/country'), 'refresh');
+        }
         
         $page_data['page_name'] = 'country';
         $page_data['page_title'] = get_phrase('country');
@@ -366,6 +376,10 @@ class Admin extends CI_Controller
             $page_data['page_name'] = 'country_add';
             $page_data['country'] = $this->custom_model->get_country()->result_array();
             $page_data['page_title'] = get_phrase('add_country');
+        }
+		if ($param1 == "import_country") {
+			$page_data['page_name'] = 'import_country';
+            $page_data['page_title'] = get_phrase('import_country');
         }
         if ($param1 == "edit_country") {
 
@@ -444,9 +458,77 @@ class Admin extends CI_Controller
         $this->load->view('backend/index', $page_data);
     }
 
+// Murugan added here
+ public function smtp_settings($param1 = "")
+    {
+        if ($this->session->userdata('admin_login') != true) {
+            redirect(site_url('login'), 'refresh');
+        }
 
+        // CHECK ACCESS PERMISSION
+        check_permission('settings');
 
+        if ($param1 == 'update') {
+            $this->crud_model->update_smtp_settings();
+            $this->session->set_flashdata('flash_message', get_phrase('smtp_settings_updated_successfully'));
+            redirect(site_url('admin/smtp_settings'), 'refresh');
+        }
 
+        $page_data['page_name'] = 'smtp_settings';
+        $page_data['page_title'] = get_phrase('smtp_settings');
+        $this->load->view('backend/index', $page_data);
+    }
+
+	public function email_template_form($param1 = "", $param2 = "")
+    {
+        if ($this->session->userdata('admin_login') != true) {
+            redirect(site_url('login'), 'refresh');
+        }
+
+        // CHECK ACCESS PERMISSION
+        check_permission('email_template');
+
+        if ($param1 == "add_email_template") {
+            $page_data['page_name'] = 'add_email_template';
+            $page_data['email_template'] = $this->Emailtemp_model->get_email_template()->result_array();
+            $page_data['page_title'] = get_phrase('add_email_template');
+        }
+        if ($param1 == "edit_email_template") {
+
+            $page_data['page_name'] = 'email_template_edit';
+            $page_data['page_title'] = get_phrase('edit_email_template');
+            $page_data['email_template'] = $this->Emailtemp_model->get_email_template()->result_array();
+            $page_data['email_template_id'] = $param2;
+        }
+		
+		$page_data['email_template'] = $this->Emailtemp_model->get_email_template();
+        $page_data['page_title'] = get_phrase('email_template');
+        $page_data['page_name'] = 'email_template';
+        $this->load->view('backend/index', $page_data);
+    }
+	function email_template($param1 = "", $param2 = ""){
+        if($param1 == 'add'){
+            $this->Emailtemp_model->add_email_template();
+            $this->session->set_flashdata('flash_message', get_phrase('email_template_added_successfully'));
+            redirect(site_url('review/email_template'), 'refresh');
+        }elseif($param1 == 'update'){
+            $this->Emailtemp_model->update_email_template($param2);
+            $this->session->set_flashdata('flash_message', get_phrase('email_template_updated_successfully'));
+            redirect(site_url('review/email_template'), 'refresh');
+        }elseif($param1 == 'status'){
+            $this->Emailtemp_model->update_email_template_status($param2);
+            $this->session->set_flashdata('flash_message', get_phrase('email_template_status_has_been_updated'));
+            redirect(site_url('review/email_template'), 'refresh');
+        }elseif($param1 == 'delete'){
+            $this->Emailtemp_model->delete_email_template($param2);
+            $this->session->set_flashdata('flash_message', get_phrase('email_template_deleted_successfully'));
+            redirect(site_url('review/email_template'), 'refresh');
+        }
+        $page_data['email_template'] = $this->Emailtemp_model->get_email_template();
+        $page_data['page_title'] = get_phrase('email_template');
+        $page_data['page_name'] = 'email_template';
+        $this->load->view('backend/index', $page_data);
+    }
 
 
 

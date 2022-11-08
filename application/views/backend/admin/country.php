@@ -4,6 +4,7 @@
       <div class="card-body">
         <h4 class="page-title"> <i class="mdi mdi-web title_icon"></i> <?php echo get_phrase('country'); ?>
           <a href="<?php echo site_url('admin/country_form/add_country'); ?>" class="btn btn-outline-primary btn-rounded alignToTitle mr-1"><i class="mdi mdi-plus"></i> <?php echo get_phrase('add_new_country'); ?></a>
+          <a href="<?php echo site_url('admin/country_form/import_country'); ?>" class="btn btn-outline-primary btn-rounded alignToTitle mr-1"><i class="mdi mdi-plus"></i> <?php echo get_phrase('Import_country'); ?></a>
         </h4>
       </div> <!-- end card body-->
     </div> <!-- end card -->

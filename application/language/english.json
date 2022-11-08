@@ -1253,5 +1253,12 @@
     "sales_admin": "Sales admin",
     "add_new_template": "Add new template",
     "mail_template": "Mail template",
-    "tmp": "Tmp"
+    "tmp": "Tmp",
+    "smtp_settings_updated_successfully": "Smtp settings updated successfully",
+    "email_configuration": "Email configuration",
+    "import_country": "Import country",
+    "import_courses_scheduled": "Import courses scheduled",
+    "import_country_file": "Import country file",
+    "import_excel_file": "Import excel file",
+    "data_import_successfully": "Data import successfully"
 }

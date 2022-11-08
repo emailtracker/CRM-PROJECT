@@ -235,6 +235,28 @@
 				</ul>
 			</li>
 		<?php endif; ?>
+		
+		<?php if (has_permission('settings')) : ?>
+			<li class="side-nav-item  <?php if ($page_name == 'smtp_settings') : ?> active <?php endif; ?>">
+				<a href="javascript: void(0);" class="side-nav-link">
+					<i class="dripicons-toggles"></i>
+					<span> <?php echo get_phrase('Email_Configuration'); ?> </span>
+					<span class="menu-arrow"></span>
+				</a>
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<li class="<?php if ($page_name == 'smtp_settings') echo 'active'; ?>">
+						<a href="<?php echo site_url('admin/smtp_settings'); ?>"><?php echo get_phrase('smtp_settings'); ?></a>
+					</li>
+					<li class="<?php if ($page_name == 'email_template') echo 'active'; ?>">
+						<a href="<?php echo site_url('admin/email_template_form'); ?>"><?php echo get_phrase('email_template'); ?></a>
+					</li>
+
+					<li class="<?php if ($page_name == 'mail_box') echo 'active'; ?>">
+						<a href="<?php echo site_url('admin/mail_box'); ?>"><?php echo get_phrase('mail_box'); ?></a>
+					</li>
+				</ul>
+			</li>
+		<?php endif; ?>
 
 
 	

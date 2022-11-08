@@ -494,8 +494,74 @@ public function addleads ()
 				$this->db->where('lead_id', $id);
 		        $this->db->delete('leads');
     }
+	function country_loop()
+    {
+        $country = $this->db->select('c_id, c_name')->get('country')->result();
+        $res     = [];
+        if (!empty($country))
+        {
+            foreach ($country as $co)
+            {
+                $res[$co->c_id] = strtolower($co->c_name);
+            }
+        }
+        return $res;
+    }
+  	public function import_country_file()
+    {
+    		$get_country = $this->country_loop();			
+            $target_dir = "./uploads/country_excel/";
+            if (!is_dir($target_dir))
+            {
+                mkdir($target_dir);
+            }
+            $expl       = explode('.', $_FILES['country_files']['name']);
+            $file_ext   = strtolower(end($expl));
+            $expensions = array("xls", "xlsx", "csv");
+            if (!empty($_FILES['country_files']['name']))
+            {
+                if (in_array($file_ext, $expensions) === true)
+                {
+//                    move_uploaded_file($file_tmp, $target_dir . '/' . $file_name . '.' . $file_ext);
+                    $datas = import_xl($_FILES['country_files']['tmp_name']);
+                    if (!empty($datas))
+                    {
+                        $ar   = 0;
+                        $save = [];
+                        foreach ($datas as $ins_data)
+                        {
+                            $country_name = strtolower($ins_data['A']);
+							$get_country_record               = $this->db->where('c_name',$ins_data['A'])->get('country');
+							
+                            $country_code    = strtolower($ins_data['B']);
+                            if ($ar && $country_name)
+                            {
+                            	
+								$this->db->where('c_name', $ins_data['A']);
+						        $previous_data = $this->db->get('country')->num_rows();
+						        if ($previous_data == 0) {
+						        	$save[$ar]['c_name']         = $country_name;
+	                                $save[$ar]['c_code']        = $ins_data['B'];
+	                                $save[$ar]['c_timezone']       = $ins_data['C'];
+	                                $save[$ar]['c_currency_name']        = $ins_data['D'];
+	                                $save[$ar]['c_currency_symbol']     = $ins_data['E'];
+	                                $save[$ar]['c_cnumber']  = $ins_data['F'];
+	                                $save[$ar]['c_status']            = $ins_data['G'];
+									$save[$ar]['c_created_date']            = strtotime(date('D, d-M-Y'));
+								}
+                            	
+                            	
+                            }
+                            $ar++;
+                        }
 
-  
+                        $this->db->insert_batch('country', $save);
+                         return true;
+                    }
+                }
+            }
+        return false;
+	}
 
 
 }

@@ -183,4 +183,32 @@ class Crud_model extends CI_Model
             return false;
         }
     }
+//Murugan added here
+
+    public function update_smtp_settings()
+    {
+        $data['value'] = html_escape($this->input->post('protocol'));
+        $this->db->where('key', 'protocol');
+        $this->db->update('settings', $data);
+
+        $data['value'] = html_escape($this->input->post('smtp_crypto'));
+        $this->db->where('key', 'smtp_crypto');
+        $this->db->update('settings', $data);
+
+        $data['value'] = html_escape($this->input->post('smtp_host'));
+        $this->db->where('key', 'smtp_host');
+        $this->db->update('settings', $data);
+
+        $data['value'] = html_escape($this->input->post('smtp_port'));
+        $this->db->where('key', 'smtp_port');
+        $this->db->update('settings', $data);
+
+        $data['value'] = html_escape($this->input->post('smtp_user'));
+        $this->db->where('key', 'smtp_user');
+        $this->db->update('settings', $data);
+
+        $data['value'] = html_escape($this->input->post('smtp_pass'));
+        $this->db->where('key', 'smtp_pass');
+        $this->db->update('settings', $data);
+    }
 }
