@@ -539,6 +539,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function getConditionalStyles()
     {
+        
         return $this->getActiveSheet()->getConditionalStyles($this->getActiveCell());
     }
 

@@ -207,8 +207,49 @@
 						<li class="<?php if ($page_name == 'manage_template' || $page_name == 'manage_template') echo 'active'; ?>">
 					<a href="<?php echo site_url('emailtemplate/mailtemplate/manage_template'); ?>"><?php echo get_phrase('manage_template'); ?> </a>
 						</li>
+	
 					<?php endif; ?>	
 				</ul>
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+				    <?php if (has_permission('view_template')) : ?>
+						<li class="<?php if ($page_name == 'view_template') echo 'active'; ?>">
+							<a href="<?php echo site_url('emailtemplate/view_template/view_template'); ?>"><?php echo get_phrase('view_template'); ?></a>
+						</li>
+					<?php endif; ?>
+				</ul>
+				<ul class="side-nav-second-level" aria-expanded="false">
+					<?php if (has_permission('email_campaign1')) : ?>
+						<li class="<?php if ($page_name == 'email_campaign') echo 'active'; ?>">
+							<a href="<?php echo site_url('Emailtemplate/contact_list/email_campaign'); ?>"><?php echo get_phrase('email_campaign'); ?></a>
+						</li>
+					<?php endif; ?>
+				</ul>
+
+
+
+				<ul class="side-nav-second-level" aria-expanded="false">
+					 
+
+
+					<?php if (has_permission('automail_template')) : ?>
+						<li class="<?php if ($page_name == 'automail_template') echo 'active'; ?>">
+							<a href="<?php echo site_url('emailtemplate/automail_template/automail_template'); ?>"><?php echo get_phrase('automail_template'); ?></a>
+						</li>
+					<?php endif; ?>
+
+					<?php if (has_permission('view_automail')) : ?>
+						<li class="<?php if ($page_name == 'view_automail') echo 'active'; ?>">
+							<a href="<?php echo site_url('emailtemplate/view_automail/view_automail'); ?>"><?php echo get_phrase('view_automail'); ?></a>
+						</li>
+					<?php endif; ?> -->
+					<?php if (has_permission('mail_list')) : ?>
+						<li class="<?php if ($page_name == 'mail_list') echo 'active'; ?>">
+							<a href="<?php echo site_url('emailtemplate/mail_list/mail_list'); ?>"><?php echo get_phrase('mail_list'); ?></a>
+						</li>
+					<?php endif; ?>
+				</ul>
+
 			 </li>
 		    <?php endif; ?>
 

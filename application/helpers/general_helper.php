@@ -118,13 +118,18 @@ function import_xl($filePath, $header = true)
     ini_set('display_errors', TRUE);
     ini_set('display_startup_errors', TRUE);
     $CI            = get_instance();
+    // echo '<pre>';print_r($CI);exit;
     $CI->load->library('PHPExcel');
+    
 //Create excel reader after determining the file type
     $inputFileName = $filePath;
     /** Identify the type of $inputFileName * */
     $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+
     /** Create a new Reader of the type that has been identified * */
     $objReader     = PHPExcel_IOFactory::createReader($inputFileType);
+    
+
     /** Set read type to read cell data onl * */
     $objReader->setReadDataOnly(true);
     /** Load $inputFileName to a PHPExcel Object * */

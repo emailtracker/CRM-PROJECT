@@ -730,6 +730,7 @@ class User_model extends CI_Model
     }
 
     function check_session_data($user_type = ""){
+
         if (!$this->session->userdata('cart_items')) {
             $this->session->set_userdata('cart_items', array());
         }

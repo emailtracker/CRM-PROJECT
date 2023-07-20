@@ -751,11 +751,11 @@ if ( ! function_exists('html_escape'))
 
 		if (is_array($var))
 		{
+
 			foreach (array_keys($var) as $key)
 			{
 				$var[$key] = html_escape($var[$key], $double_encode);
 			}
-
 			return $var;
 		}
 

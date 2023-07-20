@@ -20,6 +20,7 @@ class Login extends CI_Controller
 
     public function index()
     {
+    
         //Check custom session data
         $this->user_model->check_session_data('login');
 

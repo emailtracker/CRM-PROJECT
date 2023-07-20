@@ -8230,7 +8230,7 @@ body {
 .enlarged .side-nav .side-nav-item {
   position: relative;
   white-space: nowrap; }
-  .enlarged .side-nav .side-nav-item .side-nav-link {
+  .enlarged .side-nav .side-nav-item .{
     padding: 15px 20px;
     min-height: 56px; }
     .enlarged .side-nav .side-nav-item .side-nav-link:hover, .enlarged .side-nav .side-nav-item .side-nav-link:active, .enlarged .side-nav .side-nav-item .side-nav-link:focus {

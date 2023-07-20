@@ -6,6 +6,8 @@ class Home extends CI_Controller
 
     public function __construct()
     {
+
+
         parent::__construct();
         // Your own constructor code
         $this->load->database();
@@ -20,7 +22,8 @@ class Home extends CI_Controller
     }
     public function index()
     {
-        $this->home();
+        
+         $this->home();
     }
 
     public function verification_code()
@@ -65,5 +68,11 @@ class Home extends CI_Controller
         }
         $page_data['user_details'] = $this->user_model->get_user($this->session->userdata('user_id'));
         $this->load->view('frontend/' . get_frontend_settings('theme') . '/index', $page_data);
+    }
+
+    public function abc(){
+         $page_data['page_name'] = 'email/unsubscribe';
+        $page_data['page_title'] = get_phrase('unsubscribe');
+        $this->load->view('backend/index.php',$page_data);
     }
 }

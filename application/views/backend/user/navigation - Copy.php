@@ -17,7 +17,7 @@
 		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
 			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
 				<li class="side-nav-item">
-					<a href="<?php echo site_url('user/dashboard'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+					<a href="<?php echo site_url('user/dashboard'); ?>" class="<?php if ($page_name == 'dashboard') echo 'active'; ?>">
 						<i class="dripicons-view-apps"></i>
 						<span><?php echo get_phrase('dashboard'); ?></span>
 					</a>
@@ -86,7 +86,7 @@
 		<?php if (get_settings('allow_campaign_manager') == 1) : ?>
 			<?php if ($this->session->userdata('is_campaign_manager')) : ?>
 				<li class="side-nav-item">
-					<a href="<?php echo site_url('user/categories'); ?>" class="side-nav-link <?php if ($page_name == 'dashboard') echo 'active'; ?>">
+					<a href="<?php echo site_url('user/categories'); ?>" class="<?php if ($page_name == 'dashboard') echo 'active'; ?>">
 						<i class="dripicons-view-apps"></i>
 						<span><?php echo get_phrase('course'); ?></span>
 					</a>

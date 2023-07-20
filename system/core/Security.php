@@ -374,12 +374,13 @@ class CI_Security {
 	 * @return	string
 	 */
 	public function xss_clean($str, $is_image = FALSE)
-	{
+	{      
 		// Is the string an array?
 		if (is_array($str))
-		{
+		{ 
+
 			foreach ($str as $key => &$value)
-			{
+			{ 
 				$str[$key] = $this->xss_clean($value);
 			}
 

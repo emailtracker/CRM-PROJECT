@@ -81,7 +81,8 @@ class Emailtemplate extends CI_Model
                 // $this->db->delete('email_template',arr);
                 $this->db -> where('id', $id);
                 $this->db -> delete('email_template');
-                redirect(site_url('emailtemplate/mailtemplate/manage_template'),'refresh');
+                // redirect(site_url('emailtemplate/mailtemplate/manage_template'),'refresh');
+                redirect(site_url('emailtemplate/view_template/view_template'),'refresh');
     }
 
   

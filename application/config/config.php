@@ -139,7 +139,7 @@ $config['subclass_prefix'] = 'REST_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = "vendor/autoload.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -534,3 +534,4 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+$config['sender_email'] ="ashok4amaze@gmail.com";
